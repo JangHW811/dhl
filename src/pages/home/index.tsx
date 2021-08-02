@@ -2,6 +2,7 @@ import React from 'react';
 const HomePage = () => {
   return (
     <div>
+      home
       {/* <Button type='primary'>버튼맨</Button>
       <Button type='primary'>버튼11맨</Button>
       <Button type='primary'>버튼맨</Button>
