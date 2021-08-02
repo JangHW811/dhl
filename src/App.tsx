@@ -3,7 +3,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import './App.less';
 import CommonLayout from './pages/components/common/organisms/CommonLayout';
-import HomePage from './pages/home';
 import LoginPage from './pages/login';
 
 function App() {
@@ -11,7 +10,8 @@ function App() {
     <div className='App'>
       <Layout>
         <CommonLayout>
-          <Route exact path='/' component={HomePage} />
+          <Route exact path='/' component={LoginPage} />
+          {/* <Route exact path='/' component={HomePage} /> */}
           <Route path='/login' component={LoginPage} />
         </CommonLayout>
       </Layout>
