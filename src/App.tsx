@@ -10,9 +10,9 @@ function App() {
     <div className='App'>
       <Layout>
         <CommonLayout>
-          <Route exact path='/' component={LoginPage} />
+          <Route exact path='/dhl/' component={LoginPage} />
           {/* <Route exact path='/' component={HomePage} /> */}
-          <Route path='/login' component={LoginPage} />
+          <Route path='/dhl/login' component={LoginPage} />
         </CommonLayout>
       </Layout>
     </div>
