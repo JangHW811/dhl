@@ -20,9 +20,9 @@ const SideMenu: FC = () => {
         mode='inline'
         style={{ backgroundColor: '#fff' }}>
         <SubMenu key='sub0' title='기업고객(B2B)'>
-          <Menu.Item key='9'>고객정보 조회</Menu.Item>
-          <Menu.Item key='91'>고객정보 등록</Menu.Item>
-          <Menu.Item key='92'>고객정보 업로드</Menu.Item>
+          <Menu.Item key='00'>고객정보 조회</Menu.Item>
+          <Menu.Item key='01'>고객정보 등록</Menu.Item>
+          <Menu.Item key='02'>고객정보 업로드</Menu.Item>
         </SubMenu>
         <Menu.Item key='2'>개인고객</Menu.Item>
         <SubMenu key='sub1' title='개인통관정보'>

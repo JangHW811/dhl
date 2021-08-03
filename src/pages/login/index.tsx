@@ -1,11 +1,14 @@
 import { InfoCircleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Space, Tooltip } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { EnumRouteUrl } from '../../constants/ConstRoute';
 import CommonContainer from '../components/common/atoms/CommonContainer';
 import CommonInput from '../components/common/atoms/CommonInput';
 
 const LoginPage = () => {
+  const submitHandle = () => {};
   return (
     <CommonContainer center>
       <Contents direction={'vertical'} size={12}>
@@ -20,6 +23,7 @@ const LoginPage = () => {
           }
         />
         <CommonInput
+          errorMessage={'비밀번호가 틀렸씀'}
           type={'password'}
           placeholder='Enter your Password'
           prefix={<LockOutlined />}
@@ -29,7 +33,9 @@ const LoginPage = () => {
             </Tooltip>
           }
         />
-        <Button type={'primary'}>Login</Button>
+        <Link to={EnumRouteUrl.HOME}>
+          <Button type={'primary'}>Login</Button>
+        </Link>
       </Contents>
     </CommonContainer>
   );
