@@ -1,16 +1,20 @@
+import { EnumRouteUrl } from '@constants/ConstRoute';
 import { Menu } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const SideMenu: FC = () => {
+const SideMenu: FC = (props) => {
+  const history = useHistory();
+  console.log(props);
   return (
     <Sider
       style={{ backgroundColor: '#fff' }}
       collapsible
       collapsedWidth={100}
       //   collapsed={true}
-      //   onCollapse={this.onCollapse}
+      //   onCollapse={thi쟈s.onCollapse}
     >
       <div className='logo' />
       <Menu
@@ -20,7 +24,14 @@ const SideMenu: FC = () => {
         mode='inline'
         style={{ backgroundColor: '#fff' }}>
         <SubMenu key='sub0' title='기업고객(B2B)'>
-          <Menu.Item key='00'>고객정보 조회</Menu.Item>
+          <Menu.Item
+            key='00'
+            onClick={() => {
+              console.log('???');
+              history.push(EnumRouteUrl.CUSTOMER_LIST);
+            }}>
+            고객정보 조회
+          </Menu.Item>
           <Menu.Item key='01'>고객정보 등록</Menu.Item>
           <Menu.Item key='02'>고객정보 업로드</Menu.Item>
         </SubMenu>

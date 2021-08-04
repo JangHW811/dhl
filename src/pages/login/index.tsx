@@ -1,14 +1,20 @@
 import { InfoCircleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Space, Tooltip } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import { EnumRouteUrl } from '../../constants/ConstRoute';
+import { useAuth } from '../../utils/auth';
 import CommonContainer from '../components/common/atoms/CommonContainer';
 import CommonInput from '../components/common/atoms/CommonInput';
 
-const LoginPage = () => {
-  const submitHandle = () => {};
+const LoginPage = (props: RouteComponentProps) => {
+  const { authToken, authAction } = useAuth();
+  const submitHandle = () => {
+    authAction.login();
+    console.log('data', authToken);
+    props.history.push(EnumRouteUrl.HOME);
+  };
   return (
     <CommonContainer center>
       <Contents direction={'vertical'} size={12}>
@@ -23,7 +29,7 @@ const LoginPage = () => {
           }
         />
         <CommonInput
-          errorMessage={'비밀번호가 틀렸씀'}
+          message={'비밀번호가 틀렸씀'}
           type={'password'}
           placeholder='Enter your Password'
           prefix={<LockOutlined />}
@@ -33,9 +39,9 @@ const LoginPage = () => {
             </Tooltip>
           }
         />
-        <Link to={EnumRouteUrl.HOME}>
-          <Button type={'primary'}>Login</Button>
-        </Link>
+        <Button type={'primary'} onClick={() => submitHandle()}>
+          Login
+        </Button>
       </Contents>
     </CommonContainer>
   );

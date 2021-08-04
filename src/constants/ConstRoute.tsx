@@ -1,9 +1,11 @@
+import CustomerListPage from '../pages/customer-list';
 import HomePage from '../pages/home';
 import LoginPage from '../pages/login';
 
 export enum EnumRouteUrl {
   HOME = '/',
   LOGIN = '/login',
+  CUSTOMER_LIST = '/customerList',
 }
 
 export interface RouteInterface {
@@ -20,4 +22,7 @@ export const LOGIN_ROUTES: RouteInterface[] = [
   },
 ];
 
-export const ROUTES: RouteInterface[] = [{ path: EnumRouteUrl.HOME, exact: true, component: HomePage }];
+export const ROUTES: RouteInterface[] = [
+  { path: EnumRouteUrl.HOME, exact: true, component: HomePage },
+  { path: EnumRouteUrl.CUSTOMER_LIST, exact: true, component: CustomerListPage },
+];

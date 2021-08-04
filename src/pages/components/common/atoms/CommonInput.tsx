@@ -3,27 +3,27 @@ import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
 interface HeaderInterface extends InputProps {
-  errorMessage?: string;
+  message?: string;
 }
 const CommonInput: FC<HeaderInterface> = (props) => {
   return (
     <Row>
-      <ComInput {...props} errorMessage={!!props.errorMessage} />
-      <ErrorMessage>{props.errorMessage}</ErrorMessage>
+      <ComInput {...props} message={props.message} />
+      {!!props.message && <ErrorMessageFont>{props.message}</ErrorMessageFont>}
     </Row>
   );
 };
 
-const ComInput = styled(Input)<{ errorMessage: boolean }>`
-  ${({ errorMessage }) =>
-    errorMessage &&
+const ComInput = styled(Input)<{ message?: string }>`
+  ${({ message }) =>
+    message &&
     css`
       border-color: red;
     `}
   height: 40px;
 `;
 
-const ErrorMessage = styled.p`
+const ErrorMessageFont = styled.p`
   padding: 6px 12px;
   color: red;
   font-size: 14px;

@@ -1,0 +1,15 @@
+export enum STORAGE_KEY {
+  AUTH_TOKEN = 'AUTH_TOKEN',
+}
+
+export const setStorageItem = (key: STORAGE_KEY, value: any) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getStorageItem = (key: STORAGE_KEY) => {
+  return JSON.parse(localStorage.getItem(key) || 'null');
+};
+
+export const removeStorageItem = (key: STORAGE_KEY) => {
+  return localStorage.removeItem(key);
+};

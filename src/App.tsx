@@ -1,31 +1,25 @@
+import { useAuth } from '@utils/auth';
 import { Layout } from 'antd';
 import React, { FC } from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import './App.less';
 import { LOGIN_ROUTES, RouteInterface, ROUTES } from './constants/ConstRoute';
 import CommonLayout from './pages/components/common/organisms/CommonLayout';
+import GlobalModal from './pages/components/common/templates/GlobalModal';
 
 function App() {
+  const { isLoggedIn } = useAuth();
   return (
     <div className='App'>
       <Layout>
         <CommonLayout>
           <Switch>
             {(() => {
-              const isLogin = false; //getToken();
-              console.log('isLogin', isLogin);
-              return isLogin ? (
-                <>
-                  <Route component={AdminRouter} />
-                </>
-              ) : (
-                <>
-                  <Route component={LoginRouter} />
-                </>
-              );
+              return isLoggedIn ? <Route component={Router} /> : <Route component={LoginRouter} />;
             })()}
           </Switch>
         </CommonLayout>
+        <GlobalModal />
       </Layout>
     </div>
   );
@@ -37,7 +31,8 @@ const getRouter = (routes: RouteInterface[]) => {
   return routes.map((route, index) => (
     <Route
       key={route.path}
-      path={GITHUB_PAGES_URL + route.path.toString()}
+      // path={GITHUB_PAGES_URL + route.path.toString()}
+      path={route.path.toString()}
       exact={route.exact}
       component={withRouter(route.component)}
     />
@@ -54,7 +49,7 @@ const LoginRouter: FC = () => {
   );
 };
 
-const AdminRouter: FC = () => {
+const Router: FC = () => {
   const homeRoute = ROUTES[0];
   return (
     <Switch>
