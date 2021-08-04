@@ -31,8 +31,8 @@ const getRouter = (routes: RouteInterface[]) => {
   return routes.map((route, index) => (
     <Route
       key={route.path}
-      // path={GITHUB_PAGES_URL + route.path.toString()}
-      path={route.path.toString()}
+      path={GITHUB_PAGES_URL + route.path.toString()}
+      // path={route.path.toString()}
       exact={route.exact}
       component={withRouter(route.component)}
     />
