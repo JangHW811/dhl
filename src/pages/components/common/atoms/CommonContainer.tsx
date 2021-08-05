@@ -18,6 +18,7 @@ const CommonContainer: FC<HeaderInterface> = ({
   direction = 'column',
 }) => {
   const defaultStyle: CSSProperties = {
+    background: 'white',
     width: '100%',
     height: '100%',
     padding: 25,
