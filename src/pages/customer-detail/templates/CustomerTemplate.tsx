@@ -34,7 +34,7 @@ const CustomerTemplate: FC<CustomerTemplateInterface> = () => {
         {customerDetail?.openDate}
       </Descriptions.Item>
       <Descriptions.Item label='Creadit Stop'>{customerDetail?.creditStop}</Descriptions.Item>
-      <Descriptions.Item label='Stop 사유'>{customerDetail?.creditStop}</Descriptions.Item>
+      <Descriptions.Item label='Stop 사유'>{customerDetail?.debtorReason}</Descriptions.Item>
       <Descriptions.Item label='최종수정일'>{customerDetail?.mktModifyDate}</Descriptions.Item>
       <Descriptions.Item label='최종수정자'>{customerDetail?.mktModifyUserId}</Descriptions.Item>
     </Descriptions>
