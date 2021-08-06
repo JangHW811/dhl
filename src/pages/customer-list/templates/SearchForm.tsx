@@ -7,13 +7,13 @@ interface SearchFormInterface {
 }
 
 export interface SearchDataInterface {
-  key: string;
-  value: string;
+  searchField: string;
+  searchValue: string;
 }
 const SearchForm: FC<SearchFormInterface> = ({ onSearch }) => {
   const [searchType, setSearchType] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [searchData, setSearchData] = useState<SearchDataInterface>({ key: '', value: '' });
+  const [searchData, setSearchData] = useState<SearchDataInterface>({ searchField: '', searchValue: '' });
   const changeSearchType = (key: string) => {
     setSearchType(key);
     setSearchKeyword('');
@@ -21,8 +21,8 @@ const SearchForm: FC<SearchFormInterface> = ({ onSearch }) => {
 
   useEffect(() => {
     setSearchData({
-      key: searchType,
-      value: searchKeyword,
+      searchField: searchType,
+      searchValue: searchKeyword,
     });
   }, [searchType, searchKeyword]);
   return (
@@ -52,7 +52,7 @@ const SearchForm: FC<SearchFormInterface> = ({ onSearch }) => {
       <Col>
         <Button
           type={'primary'}
-          disabled={!(searchData.key && searchData.value)}
+          disabled={!(searchData.searchField && searchData.searchValue)}
           onClick={() => {
             onSearch(searchData);
           }}>

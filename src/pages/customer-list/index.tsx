@@ -16,7 +16,7 @@ const CustomerListPage = () => {
         onChangeField={() => isSearched(false)}
       />
       <HorizontalBlank height={20} />
-      {searched && <CustomerList {...param} />}
+      {searched && <CustomerList {...param} key={'customerList'} />}
     </CommonContainer>
   );
 };

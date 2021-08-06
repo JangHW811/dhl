@@ -32,7 +32,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "clean": "rm -rf node_modules && npm cache clean -f"
+    "clean": "rm -rf node_modules && npm cache clean -f && npm i"
   },
   "eslintConfig": {
     "extends": [
