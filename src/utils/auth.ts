@@ -4,8 +4,10 @@ import useSWR from 'swr';
 import { getStorageItem, removeStorageItem, setStorageItem, STORAGE_KEY } from './storage';
 
 export const useAuth = () => {
+  const authToken = getStorageItem(STORAGE_KEY.AUTH_TOKEN);
   const history = useHistory();
   const { data, mutate } = useSWR('authToken', () => getStorageItem(STORAGE_KEY.AUTH_TOKEN));
+
   //   const { data, mutate } = getToken();
   const login = () => {
     setStorageItem(STORAGE_KEY.AUTH_TOKEN, '123');
@@ -18,8 +20,8 @@ export const useAuth = () => {
   };
 
   return {
-    authToken: data,
-    isLoggedIn: !!data,
+    authToken,
+    isLoggedIn: !!authToken,
     authAction: { login, logout },
   };
 };

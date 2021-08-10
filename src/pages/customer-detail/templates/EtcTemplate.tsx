@@ -11,7 +11,7 @@ const EtcTemplate: FC<EtcTemplateInterface> = () => {
   const { customerBizDetail } = CustomerDetailBizData('123');
 
   const { inputRef } = useBarcode({
-    value: customerBizDetail?.bizNo ?? '',
+    value: customerBizDetail?.bizNo ?? '-',
     options: {},
   });
 
