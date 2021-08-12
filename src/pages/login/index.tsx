@@ -1,6 +1,7 @@
 import { InfoCircleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { isRequired } from '@utils/validate';
 import { Button, Space, Tooltip } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import { EnumRouteUrl } from '../../constants/ConstRoute';
@@ -9,10 +10,12 @@ import CommonContainer from '../components/common/atoms/CommonContainer';
 import CommonInput from '../components/common/atoms/CommonInput';
 
 const LoginPage = (props: RouteComponentProps) => {
-  const { authToken, authAction } = useAuth();
+  const { accessToken, authAction } = useAuth();
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
   const submitHandle = () => {
-    authAction.login();
-    console.log('data', authToken);
+    authAction.login(userId, password);
+    console.log('dataqq', accessToken);
     props.history.push(EnumRouteUrl.HOME);
   };
   return (
@@ -21,6 +24,7 @@ const LoginPage = (props: RouteComponentProps) => {
         <Message>Enter Your Credentials</Message>
         <CommonInput
           placeholder='Enter your ID'
+          onChange={({ target }) => setUserId(target.value)}
           prefix={<UserOutlined />}
           suffix={
             <Tooltip title='Enter your ID'>
@@ -30,6 +34,7 @@ const LoginPage = (props: RouteComponentProps) => {
         />
         <CommonInput
           message={'비밀번호가 틀렸씀'}
+          onChange={({ target }) => setPassword(target.value)}
           type={'password'}
           placeholder='Enter your Password'
           prefix={<LockOutlined />}
@@ -39,7 +44,7 @@ const LoginPage = (props: RouteComponentProps) => {
             </Tooltip>
           }
         />
-        <Button type={'primary'} onClick={() => submitHandle()}>
+        <Button type={'primary'} onClick={() => submitHandle()} disabled={!isRequired(userId, password)}>
           Login
         </Button>
       </Contents>

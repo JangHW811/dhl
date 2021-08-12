@@ -28,7 +28,7 @@ const CustomerList: FC<CustomerListInterface> = ({ searchField, searchValue }) =
   return (
     <>
       <Table
-        dataSource={customerList}
+        // dataSource={customerList}
         rowKey={'accnt_no'}
         columns={[
           {

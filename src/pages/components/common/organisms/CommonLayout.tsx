@@ -10,8 +10,8 @@ interface CommonLayoutInterface {
   children: React.ReactNode | React.ReactNodeArray;
 }
 const CommonLayout: FC<CommonLayoutInterface> = ({ children }) => {
-  const { authToken, isLoggedIn } = useAuth();
-  console.log('logggggin', authToken);
+  const { accessToken, isLoggedIn } = useAuth();
+  console.log('logggggin', accessToken);
   return (
     <Container>
       <Layout style={{ minHeight: '100vh' }}>

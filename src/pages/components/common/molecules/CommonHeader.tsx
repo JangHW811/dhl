@@ -1,10 +1,10 @@
+import DHL_LOGO from '@assets/logo.gif';
 import { useGlobalModal } from '@store/modal';
 import { useAuth } from '@utils/auth';
 import { Button, Col, Row } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import DHL_LOGO from '../../../../assets/logo.gif';
 
 interface HeaderInterface {
   title: string;

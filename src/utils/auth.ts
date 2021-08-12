@@ -1,27 +1,44 @@
 import { EnumRouteUrl } from '@constants/ConstRoute';
+import { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import useSWR from 'swr';
+import { atom, useRecoilState } from 'recoil';
 import { getStorageItem, removeStorageItem, setStorageItem, STORAGE_KEY } from './storage';
 
-export const useAuth = () => {
-  const authToken = getStorageItem(STORAGE_KEY.AUTH_TOKEN);
-  const history = useHistory();
-  const { data, mutate } = useSWR('authToken', () => getStorageItem(STORAGE_KEY.AUTH_TOKEN));
+export const accessTokenAtom = atom<string>({
+  key: '@auth/accessTokenAtom',
+  default: getStorageItem(STORAGE_KEY.ACCESS_TOKEN),
+});
 
+export const useAuth = () => {
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+  const history = useHistory();
+
+  useEffect(() => {
+    console.log('accessToken', accessToken);
+    accessToken ? setStorageItem(STORAGE_KEY.ACCESS_TOKEN, accessToken) : removeStorageItem(STORAGE_KEY.ACCESS_TOKEN);
+  }, [accessToken]);
   //   const { data, mutate } = getToken();
-  const login = () => {
-    setStorageItem(STORAGE_KEY.AUTH_TOKEN, '123');
-    return mutate();
-  };
+  const login = useCallback(
+    async (userId: string, password: string) => {
+      // const res = authApi.post('/comm/control/auth', {
+      //   userId,
+      //   password,
+      // });
+      setAccessToken(
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhcHAiOiJLQ01GIiwicm9sZSI6IkFETSIsImV4cCI6MTYyODcyOTEzNCwiaWF0IjoxNjI4NzI4NTM0LCJlbWFpbCI6bnVsbCwidXNlcm5hbWUiOiJoeXVud29vaiJ9.pcGXavKFCDNwpwDPfl2HCSGw6-OoLYQAJt4rNTZjTOhzRzzs8zd5iNxyhkdhUw7izNOpOtlEEm_D4a2dSuEMkg',
+      );
+    },
+    [setAccessToken],
+  );
+
   const logout = () => {
-    removeStorageItem(STORAGE_KEY.AUTH_TOKEN);
+    setAccessToken('');
     history.push(EnumRouteUrl.LOGIN);
-    return mutate();
   };
 
   return {
-    authToken,
-    isLoggedIn: !!authToken,
+    accessToken,
+    isLoggedIn: !!accessToken,
     authAction: { login, logout },
   };
 };

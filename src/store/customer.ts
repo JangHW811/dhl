@@ -1,8 +1,8 @@
 import { ParsedUrlQueryInput, stringify } from 'querystring';
+import { Fecher } from 'src/axios/fetcher';
 import useSWR from 'swr';
 import TempDetailJson from '../sample/customerDetail1.json';
 import TempBizJson from '../sample/customerDetail2.json';
-import TempListJson from '../sample/customerList.json';
 
 interface GetCustomerListRequest extends ParsedUrlQueryInput {
   searchField?: string;
@@ -13,7 +13,7 @@ interface CustomerListItemInterface {}
 export const CustomerListData = (param: GetCustomerListRequest) => {
   const test = stringify(param);
 
-  const { data, error, mutate } = useSWR('CustomerList', () => TempListJson);
+  const { data, error, mutate } = useSWR('/dhl/kr/search/kcmf/b2b/bizDetailList', Fecher.get);
 
   return { customerList: data, error, customerListAction: { mutate } };
 };
