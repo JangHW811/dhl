@@ -1,5 +1,5 @@
-import { ParsedUrlQueryInput, stringify } from 'querystring';
-import { Fecher } from 'src/axios/fetcher';
+import { ParsedUrlQueryInput } from 'querystring';
+import { useRequest } from 'src/axios/useRequest';
 import useSWR from 'swr';
 import TempDetailJson from '../sample/customerDetail1.json';
 import TempBizJson from '../sample/customerDetail2.json';
@@ -10,10 +10,8 @@ interface GetCustomerListRequest extends ParsedUrlQueryInput {
 }
 interface CustomerListItemInterface {}
 
-export const CustomerListData = (param: GetCustomerListRequest) => {
-  const test = stringify(param);
-
-  const { data, error, mutate } = useSWR('/dhl/kr/search/kcmf/b2b/bizDetailList', Fecher.get);
+export const CustomerListData = (params: GetCustomerListRequest) => {
+  const { data, error, mutate } = useRequest({ url: '/dhl/kr/search/kcmf/b2b/bizDetailList', params, method: 'GET' });
 
   return { customerList: data, error, customerListAction: { mutate } };
 };

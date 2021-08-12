@@ -17,13 +17,15 @@ axiosInstance.interceptors.response.use(responseSuccessInterceptor, responseErro
 export const authApi = axios.create(baseOptions);
 
 export const Fecher = {
-  get: async <T = null>({ endpoint, params, options }: CustomGetRequestType) => {
-    const result = await axiosInstance.get<T>(endpoint, {
-      params,
-      ...options,
-    });
+  get: async <T = null>(a: any, b: any, c: any) => {
+    console.log('aaaaa', a, b, c);
+    // console.log();
+    // const result = await axiosInstance.get<T>(endpoint, {
+    //   params,
+    //   ...options,
+    // });
 
-    return result;
+    // return result;
   },
   post: async <T = null>({ endpoint, body, options, params }: CustomRequestType) => {
     return await axiosInstance.post<CustomResponseType<T>>(endpoint, body, {
