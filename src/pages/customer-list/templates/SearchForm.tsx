@@ -3,16 +3,16 @@ import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 interface SearchFormInterface {
   onSearch: (data: SearchDataInterface) => void;
-  onChangeField: () => void;
+  param?: SearchDataInterface;
 }
 
 export interface SearchDataInterface {
   searchField: string;
   searchValue: string;
 }
-const SearchForm: FC<SearchFormInterface> = ({ onSearch }) => {
-  const [searchType, setSearchType] = useState('');
-  const [searchKeyword, setSearchKeyword] = useState('');
+const SearchForm: FC<SearchFormInterface> = ({ onSearch, param }) => {
+  const [searchType, setSearchType] = useState(param?.searchField ?? '');
+  const [searchKeyword, setSearchKeyword] = useState(param?.searchValue ?? '');
   const [searchData, setSearchData] = useState<SearchDataInterface>({ searchField: '', searchValue: '' });
   const changeSearchType = (key: string) => {
     setSearchType(key);
@@ -33,6 +33,7 @@ const SearchForm: FC<SearchFormInterface> = ({ onSearch }) => {
           onChange={(value: any) => {
             changeSearchType(value);
           }}
+          value={param?.searchField}
           options={[
             { label: '고객번호', value: 'accntNo' },
             { label: '한글상호', value: 'bizKorNm' },

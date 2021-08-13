@@ -28,10 +28,14 @@ const axiosInstance = axios.create(baseOptions);
 axiosInstance.interceptors.request.use(requestInterceptor);
 axiosInstance.interceptors.response.use(responseSuccessInterceptor, responseErrorInterceptor);
 
+export const authApi = axios.create(baseOptions);
+
 export const useRequest = <Data = unknown, Error = unknown>(
   request: GetRequest,
   { initialData, ...config }: Config<Data, Error> = {},
+  isAuth = false,
 ): Return<Data, Error> => {
+  console.log('request', request);
   const {
     data: response,
     error,
@@ -44,7 +48,7 @@ export const useRequest = <Data = unknown, Error = unknown>(
      * function is actually only called by `useSWR` when it isn't.
      */
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    () => axiosInstance.request(request!),
+    () => (isAuth ? authApi.request(request!) : axiosInstance.request(request!)),
     {
       ...config,
       initialData: initialData && {

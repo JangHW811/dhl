@@ -2,6 +2,7 @@ import { EnumRouteUrl } from '@constants/ConstRoute';
 import { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { atom, useRecoilState } from 'recoil';
+import { authApi } from 'src/axios/useRequest';
 import { getStorageItem, removeStorageItem, setStorageItem, STORAGE_KEY } from './storage';
 
 export const accessTokenAtom = atom<string>({
@@ -20,13 +21,13 @@ export const useAuth = () => {
   //   const { data, mutate } = getToken();
   const login = useCallback(
     async (userId: string, password: string) => {
-      // const res = authApi.post('/comm/control/auth', {
-      //   userId,
-      //   password,
-      // });
-      setAccessToken(
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhcHAiOiJLQ01GIiwicm9sZSI6IkFETSIsImV4cCI6MTYyODcyOTEzNCwiaWF0IjoxNjI4NzI4NTM0LCJlbWFpbCI6bnVsbCwidXNlcm5hbWUiOiJoeXVud29vaiJ9.pcGXavKFCDNwpwDPfl2HCSGw6-OoLYQAJt4rNTZjTOhzRzzs8zd5iNxyhkdhUw7izNOpOtlEEm_D4a2dSuEMkg',
-      );
+      const res = await authApi.post('/comm/control/auth', {
+        userId,
+        password,
+      });
+
+      const { apiToken } = res.data;
+      setAccessToken(apiToken);
     },
     [setAccessToken],
   );

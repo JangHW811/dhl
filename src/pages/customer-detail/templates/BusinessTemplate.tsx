@@ -1,13 +1,26 @@
-import { CustomerDetailBizData } from '@store/customer';
+import { API } from '@apis/API';
 import { Descriptions } from 'antd';
 import React, { FC } from 'react';
+import { useRequest } from 'src/axios/useRequest';
+import { CustomerDetailBizItemInterface } from '..';
 
-interface BusinessTemplateInterface {}
+interface BusinessTemplateInterface {
+  accntNo: string;
+}
 
-const BusinessTemplate: FC<BusinessTemplateInterface> = () => {
-  const { customerBizDetail } = CustomerDetailBizData('123');
+const BusinessTemplate: FC<BusinessTemplateInterface> = ({ accntNo }) => {
+  const { endpoint, method } = API.CUSTOMER_DETAIL_BIZ;
+  const { data: customerBizDetail, error } = useRequest<CustomerDetailBizItemInterface>({
+    url: endpoint,
+    params: { accntNo },
+    method,
+  });
 
-  console.log('customerBizDetail', customerBizDetail);
+  if (error) {
+    return <div>error..</div>;
+  } else if (!customerBizDetail) {
+    return <div>loading..</div>;
+  }
   return (
     <Descriptions bordered column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
       <Descriptions.Item label='사업자번호'>{customerBizDetail?.bizNo}</Descriptions.Item>
@@ -34,10 +47,10 @@ const BusinessTemplate: FC<BusinessTemplateInterface> = () => {
       <Descriptions.Item label='이메일'>{customerBizDetail?.bizContactEmail}</Descriptions.Item>
       <Descriptions.Item label='휴대폰번호'>{customerBizDetail?.bizContactCP}</Descriptions.Item>
       <Descriptions.Item label='수입담당자이메일' span={2}>
-        {`${customerBizDetail?.importEmail}${customerBizDetail?.importEmailYn === 'Y' && ' (수신허용)'}`}
+        {`${customerBizDetail?.importEmail}${customerBizDetail?.importEmailYn === 'Y' ? ' (수신허용)' : ''}`}
       </Descriptions.Item>
       <Descriptions.Item label='수출담당자이메일' span={2}>
-        {`${customerBizDetail?.exportEmail}${customerBizDetail?.exportEmailYn === 'Y' && ' (수신허용)'}`}
+        {`${customerBizDetail?.exportEmail}${customerBizDetail?.exportEmailYn === 'Y' ? ' (수신허용)' : ''}`}
       </Descriptions.Item>
       <Descriptions.Item label='전송 TYPE' span={2}>
         {customerBizDetail?.collectType}

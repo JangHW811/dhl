@@ -1,13 +1,26 @@
-import { CustomerDetailData } from '@store/customer';
+import { API } from '@apis/API';
 import { Descriptions } from 'antd';
 import React, { FC } from 'react';
+import { useRequest } from 'src/axios/useRequest';
+import { CustomerDetailItemInterface } from '..';
 
-interface CustomerTemplateInterface {}
+interface CustomerTemplateInterface {
+  accntNo: string;
+}
 
-const CustomerTemplate: FC<CustomerTemplateInterface> = () => {
-  const { customerDetail } = CustomerDetailData('123');
+const CustomerTemplate: FC<CustomerTemplateInterface> = ({ accntNo }) => {
+  const { endpoint, method } = API.CUSTOMER_DETAIL;
+  const { data: customerDetail, error } = useRequest<CustomerDetailItemInterface>({
+    url: endpoint,
+    params: { accntNo },
+    method,
+  });
 
-  console.log('customerDetail', customerDetail);
+  if (error) {
+    return <div>error..</div>;
+  } else if (!customerDetail) {
+    return <div>loading..</div>;
+  }
   return (
     <Descriptions title='고객번호 조회 결과' bordered column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
       <Descriptions.Item label='고객번호'>{customerDetail?.accntNo}</Descriptions.Item>

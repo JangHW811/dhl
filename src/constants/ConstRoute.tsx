@@ -7,7 +7,7 @@ export enum EnumRouteUrl {
   HOME = '/',
   LOGIN = '/login',
   CUSTOMER_LIST = '/customerList',
-  CUSTOMER_DETAIL = '/customerDetail',
+  CUSTOMER_DETAIL = '/customerDetail/:accntNo',
 }
 
 export interface RouteInterface {
