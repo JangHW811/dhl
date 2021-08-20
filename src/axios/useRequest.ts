@@ -18,7 +18,7 @@ export interface Config<Data = unknown, Error = unknown>
 
 const baseOptions: AxiosRequestConfig = {
   baseURL: `${process.env.REACT_APP_API_HOST}`,
-  timeout: 5000,
+  timeout: 50000,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
   },

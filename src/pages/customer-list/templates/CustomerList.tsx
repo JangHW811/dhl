@@ -31,11 +31,10 @@ const CustomerList: FC<CustomerListRequestInterface> = ({ searchField, searchVal
 
   if (error) {
     return <div>error..</div>;
-  } else if (!data) {
-    return <div>loading..</div>;
   }
   return (
     <Table
+      loading={!data}
       dataSource={data ?? []}
       rowKey={'accntNo'}
       columns={[

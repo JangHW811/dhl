@@ -1,6 +1,7 @@
 import { API } from '@apis/API';
+import CommonSpinner from '@pages/components/common/atoms/CommonSpiner';
 import { Descriptions } from 'antd';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useBarcode } from 'react-barcodes';
 import { useRequest } from 'src/axios/useRequest';
 import styled, { css } from 'styled-components';
@@ -28,17 +29,31 @@ const EtcTemplate: FC<EtcTemplateInterface> = ({ accntNo }) => {
     options: {},
   });
 
+  // if (error) {
+  //   return <div>error..</div>;
+  // } else if (!customerDetail) {
+  //   return <CommonSpinner />;
+  // }
+  const isShowTemplate = useMemo(() => {
+    return error || !customerDetail;
+  }, [error || !customerDetail]);
   return (
-    <Descriptions bordered column={{ xxl: 3, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
-      <Descriptions.Item label='Route Code'>{customerDetail?.routeCode}</Descriptions.Item>
-      <Descriptions.Item label='사업자번호(Barcode)'>
-        <BarcodeImage ref={inputRef} visible={!!customerBizDetail?.bizNo} />
-      </Descriptions.Item>
-      <Descriptions.Item label='징수형태'>{customerBizDetail?.collectType}</Descriptions.Item>
-      <Descriptions.Item label='관세납부방법'>{customerBizDetail?.taxPayMethod}</Descriptions.Item>
-      <Descriptions.Item label='대납정보'>{customerBizDetail?.taxProxyAmt}</Descriptions.Item>
-      <Descriptions.Item label='HAWB No.'>{''}</Descriptions.Item>
-    </Descriptions>
+    <>
+      {isShowTemplate && <CommonSpinner />}
+      <Descriptions
+        bordered
+        column={{ xxl: 3, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+        style={error || !customerDetail ? { display: 'none' } : {}}>
+        <Descriptions.Item label='Route Code'>{customerDetail?.routeCode}</Descriptions.Item>
+        <Descriptions.Item label='사업자번호(Barcode)'>
+          <BarcodeImage ref={inputRef} visible={!!customerBizDetail?.bizNo} />
+        </Descriptions.Item>
+        <Descriptions.Item label='징수형태'>{customerBizDetail?.collectType}</Descriptions.Item>
+        <Descriptions.Item label='관세납부방법'>{customerBizDetail?.taxPayMethod}</Descriptions.Item>
+        <Descriptions.Item label='대납정보'>{customerBizDetail?.taxProxyAmt}</Descriptions.Item>
+        <Descriptions.Item label='HAWB No.'>{''}</Descriptions.Item>
+      </Descriptions>
+    </>
   );
 };
 

@@ -1,7 +1,9 @@
 import { API } from '@apis/API';
+import CommonSpinner from '@pages/components/common/atoms/CommonSpiner';
 import { Descriptions } from 'antd';
 import React, { FC } from 'react';
 import { useRequest } from 'src/axios/useRequest';
+import styled from 'styled-components';
 import { CustomerDetailBizItemInterface } from '..';
 
 interface BusinessTemplateInterface {
@@ -17,9 +19,9 @@ const BusinessTemplate: FC<BusinessTemplateInterface> = ({ accntNo }) => {
   });
 
   if (error) {
-    return <div>error..</div>;
+    return <SpinContainer>..</SpinContainer>;
   } else if (!customerBizDetail) {
-    return <div>loading..</div>;
+    return <CommonSpinner />;
   }
   return (
     <Descriptions bordered column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
@@ -87,5 +89,12 @@ const BusinessTemplate: FC<BusinessTemplateInterface> = ({ accntNo }) => {
     </Descriptions>
   );
 };
+
+const SpinContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default BusinessTemplate;

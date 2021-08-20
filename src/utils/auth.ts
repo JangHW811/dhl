@@ -1,5 +1,5 @@
 import { EnumRouteUrl } from '@constants/ConstRoute';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { atom, useRecoilState } from 'recoil';
 import { authApi } from 'src/axios/useRequest';
@@ -12,6 +12,7 @@ export const accessTokenAtom = atom<string>({
 
 export const useAuth = () => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+  const [loading, isLoading] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -20,14 +21,19 @@ export const useAuth = () => {
   }, [accessToken]);
   //   const { data, mutate } = getToken();
   const login = useCallback(
-    async (userId: string, password: string) => {
-      const res = await authApi.post('/comm/control/auth', {
-        userId,
-        password,
-      });
-
-      const { apiToken } = res.data;
-      setAccessToken(apiToken);
+    async ({ userId, password }) => {
+      isLoading(true);
+      try {
+        const res = await authApi.post('/comm/control/auth', {
+          userId,
+          password,
+        });
+        const { apiToken } = res.data;
+        setAccessToken(apiToken);
+        isLoading(false);
+      } finally {
+        isLoading(false);
+      }
     },
     [setAccessToken],
   );
@@ -39,6 +45,7 @@ export const useAuth = () => {
 
   return {
     accessToken,
+    loading,
     isLoggedIn: !!accessToken,
     authAction: { login, logout },
   };

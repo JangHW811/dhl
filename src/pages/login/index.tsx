@@ -1,58 +1,80 @@
-import { InfoCircleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
-import { isRequired } from '@utils/validate';
-import { Button, Space, Tooltip } from 'antd';
-import React, { useState } from 'react';
+import { EnumRouteUrl } from '@constants/ConstRoute';
+import CommonContainer from '@pages/components/common/atoms/CommonContainer';
+import { Button, Form, Input } from 'antd';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import { EnumRouteUrl } from '../../constants/ConstRoute';
 import { useAuth } from '../../utils/auth';
-import CommonContainer from '../components/common/atoms/CommonContainer';
-import CommonInput from '../components/common/atoms/CommonInput';
 
 const LoginPage = (props: RouteComponentProps) => {
-  const { accessToken, authAction } = useAuth();
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
-  const submitHandle = () => {
-    authAction.login(userId, password);
-    console.log('dataqq', accessToken);
+  const { accessToken, authAction, loading } = useAuth();
+  // const [userId, setUserId] = useState('');
+  // const [password, setPassword] = useState('');
+  const submitHandle = async (submitData: any) => {
+    await authAction.login(submitData);
+    console.log('dataqq', accessToken, submitData);
     props.history.push(EnumRouteUrl.HOME);
   };
+  const onError = async (errorInfo: any) => {
+    console.log('errorInfo:', errorInfo);
+  };
   return (
-    <CommonContainer center>
-      <Contents direction={'vertical'} size={12}>
-        <Message>Enter Your Credentials</Message>
-        <CommonInput
-          placeholder='Enter your ID'
-          onChange={({ target }) => setUserId(target.value)}
-          prefix={<UserOutlined />}
-          suffix={
-            <Tooltip title='Enter your ID'>
-              <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-            </Tooltip>
-          }
-        />
-        <CommonInput
-          message={'비밀번호가 틀렸씀'}
-          onChange={({ target }) => setPassword(target.value)}
-          type={'password'}
-          placeholder='Enter your Password'
-          prefix={<LockOutlined />}
-          suffix={
-            <Tooltip title='Enter your Password'>
-              <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-            </Tooltip>
-          }
-        />
-        <Button type={'primary'} onClick={() => submitHandle()} disabled={!isRequired(userId, password)}>
-          Login
-        </Button>
+    <CommonContainer justifyCenter alignCenter>
+      <Contents>
+        <Form
+          name='basic'
+          style={{ width: '100%' }}
+          labelCol={{
+            span: 4,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={submitHandle}
+          onFinishFailed={onError}>
+          <Form.Item
+            label='Username'
+            name='userId'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your id',
+              },
+            ]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label='Password'
+            name='password'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password',
+              },
+            ]}>
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{
+              offset: 4,
+              span: 16,
+            }}>
+            <Button type='primary' htmlType='submit' loading={loading}>
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
       </Contents>
     </CommonContainer>
   );
 };
 
-const Contents = styled(Space)`
+const Contents = styled.div`
   width: 70%;
 `;
 
