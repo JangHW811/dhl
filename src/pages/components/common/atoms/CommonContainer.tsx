@@ -9,6 +9,7 @@ interface HeaderInterface {
   spaceBetween?: boolean;
   direction?: 'row' | 'column';
   flex?: number;
+  style?: CSSProperties;
 }
 const CommonContainer: FC<HeaderInterface> = ({
   children,
@@ -18,7 +19,9 @@ const CommonContainer: FC<HeaderInterface> = ({
   spaceBetween,
   direction = 'column',
   flex = 1,
+  style,
 }) => {
+  console.log(style);
   const defaultStyle: CSSProperties = {
     background: 'white',
     width: '100%',
@@ -30,6 +33,7 @@ const CommonContainer: FC<HeaderInterface> = ({
     // default: flex-start
     alignItems: (alignCenter && 'center') || (center && 'center') || undefined,
     flex,
+    ...style,
   };
 
   return <Content style={defaultStyle}>{children}</Content>;

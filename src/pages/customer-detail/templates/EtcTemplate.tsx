@@ -1,4 +1,5 @@
 import { API } from '@apis/API';
+import BorderTable from '@pages/components/common/atoms/BorderTable';
 import CommonSpinner from '@pages/components/common/atoms/CommonSpiner';
 import { Descriptions } from 'antd';
 import React, { FC, useMemo } from 'react';
@@ -36,12 +37,11 @@ const EtcTemplate: FC<EtcTemplateInterface> = ({ accntNo }) => {
   // }
   const isShowTemplate = useMemo(() => {
     return error || !customerDetail;
-  }, [error || !customerDetail]);
+  }, [error, customerDetail]);
   return (
     <>
       {isShowTemplate && <CommonSpinner />}
-      <Descriptions
-        bordered
+      <BorderTable
         column={{ xxl: 3, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
         style={error || !customerDetail ? { display: 'none' } : {}}>
         <Descriptions.Item label='Route Code'>{customerDetail?.routeCode}</Descriptions.Item>
@@ -52,7 +52,7 @@ const EtcTemplate: FC<EtcTemplateInterface> = ({ accntNo }) => {
         <Descriptions.Item label='관세납부방법'>{customerBizDetail?.taxPayMethod}</Descriptions.Item>
         <Descriptions.Item label='대납정보'>{customerBizDetail?.taxProxyAmt}</Descriptions.Item>
         <Descriptions.Item label='HAWB No.'>{''}</Descriptions.Item>
-      </Descriptions>
+      </BorderTable>
     </>
   );
 };

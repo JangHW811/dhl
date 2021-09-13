@@ -1,5 +1,6 @@
 export enum STORAGE_KEY {
   ACCESS_TOKEN = 'ACCESS_TOKEN',
+  USER_INFO = 'USER_INFO',
 }
 
 export const setStorageItem = (key: STORAGE_KEY, value: any) => {

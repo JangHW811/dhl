@@ -1,11 +1,10 @@
 import { API } from '@apis/API';
+import BorderTable from '@pages/components/common/atoms/BorderTable';
 import CommonSpinner from '@pages/components/common/atoms/CommonSpiner';
-import HorizontalBlank from '@pages/components/common/atoms/HorizontalBlank';
 import { Descriptions } from 'antd';
 import React, { FC } from 'react';
 import { useRequest } from 'src/axios/useRequest';
 import { CustomerDetailItemInterface } from '..';
-import ConsentTemplate from './ConsentTemplate';
 
 interface CustomerTemplateInterface {
   accntNo: string;
@@ -26,7 +25,7 @@ const CustomerTemplate: FC<CustomerTemplateInterface> = ({ accntNo }) => {
   }
   return (
     <>
-      <Descriptions title='고객번호 조회 결과' bordered column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
+      <BorderTable title='고객번호 조회 결과' column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
         <Descriptions.Item label='고객번호'>{customerDetail?.accntNo}</Descriptions.Item>
         <Descriptions.Item label='사업자번호'>{customerDetail?.bizNo}</Descriptions.Item>
         <Descriptions.Item label='상호(한글)' span={2}>
@@ -54,10 +53,10 @@ const CustomerTemplate: FC<CustomerTemplateInterface> = ({ accntNo }) => {
         <Descriptions.Item label='Stop 사유'>{customerDetail?.debtorReason}</Descriptions.Item>
         <Descriptions.Item label='최종수정일'>{customerDetail?.mktModifyDate}</Descriptions.Item>
         <Descriptions.Item label='최종수정자'>{customerDetail?.mktModifyUserId}</Descriptions.Item>
-      </Descriptions>
+      </BorderTable>
 
-      <HorizontalBlank height={40} />
-      <ConsentTemplate bizNo={customerDetail.bizNo} />
+      {/* <HorizontalBlank height={25} />
+      <ConsentTemplate bizNo={customerDetail.bizNo} /> */}
     </>
   );
 };

@@ -22,8 +22,12 @@ export const API = {
     endpoint: '/dhl/kr/search/kcmf/b2b/bizDetailInfo',
     method: 'GET',
   } as ApiInterface,
-  CUSTOMER_DETAIL_CONSENT: {
+  CUSTOMER_CONSENT_LIST: {
     endpoint: '/dhl/kr/search/kcmf/b2b/b2bCustomerConsentInfoList',
+    method: 'GET',
+  } as ApiInterface,
+  CUSTOMER_CONSENT_DETAIL: {
+    endpoint: '/dhl/kr/search/kcmf/b2b/b2bCustomerConsentInfo',
     method: 'GET',
   } as ApiInterface,
 };

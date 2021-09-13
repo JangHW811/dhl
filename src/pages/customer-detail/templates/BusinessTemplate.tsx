@@ -1,4 +1,5 @@
 import { API } from '@apis/API';
+import BorderTable from '@pages/components/common/atoms/BorderTable';
 import CommonSpinner from '@pages/components/common/atoms/CommonSpiner';
 import { Descriptions } from 'antd';
 import React, { FC } from 'react';
@@ -24,7 +25,7 @@ const BusinessTemplate: FC<BusinessTemplateInterface> = ({ accntNo }) => {
     return <CommonSpinner />;
   }
   return (
-    <Descriptions bordered column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
+    <BorderTable column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}>
       <Descriptions.Item label='사업자번호'>{customerBizDetail?.bizNo}</Descriptions.Item>
       <Descriptions.Item label='ACNT NO.'>{`${customerBizDetail?.impAccntNo} (IMP)\n${customerBizDetail?.expAccntNo} (EXP)`}</Descriptions.Item>
       <Descriptions.Item label='상호(영문)' span={2}>
@@ -86,7 +87,7 @@ const BusinessTemplate: FC<BusinessTemplateInterface> = ({ accntNo }) => {
       <Descriptions.Item label='Agent Code'>{customerBizDetail?.agentCd}</Descriptions.Item>
       <Descriptions.Item label='Agent 전화번호'>{customerBizDetail?.agentTel}</Descriptions.Item>
       <Descriptions.Item label='Agent FAX 번호'>{customerBizDetail?.agentFax}</Descriptions.Item>
-    </Descriptions>
+    </BorderTable>
   );
 };
 

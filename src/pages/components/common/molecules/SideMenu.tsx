@@ -23,7 +23,7 @@ const SideMenu: FC = (props) => {
         defaultSelectedKeys={['1']}
         mode='inline'
         style={{ backgroundColor: '#fff' }}>
-        <SubMenu key='sub0' title='기업고객(B2B)'>
+        <SubMenu key='sub0' title='KCMF 관리'>
           <Menu.Item
             key='00'
             onClick={() => {
@@ -32,20 +32,24 @@ const SideMenu: FC = (props) => {
             }}>
             고객정보 조회
           </Menu.Item>
-          <Menu.Item key='01'>고객정보 등록</Menu.Item>
-          <Menu.Item key='02'>고객정보 업로드</Menu.Item>
         </SubMenu>
-        <Menu.Item key='2'>개인고객</Menu.Item>
-        <SubMenu key='sub1' title='개인통관정보'>
-          <Menu.Item key='3'>Tom</Menu.Item>
-          <Menu.Item key='4'>Bill</Menu.Item>
-          <Menu.Item key='5'>Alex</Menu.Item>
+        <SubMenu key='sub1' title='개인정보 관리'>
+          <Menu.Item
+            key='3'
+            onClick={() => {
+              console.log('???');
+              history.push(EnumRouteUrl.CUSTOMER_CONSENT_LIST);
+            }}>
+            조회
+          </Menu.Item>
+          <Menu.Item
+            key='4'
+            onClick={() => {
+              console.log('???');
+            }}>
+            입력
+          </Menu.Item>
         </SubMenu>
-        <SubMenu key='sub2' title='Billing'>
-          <Menu.Item key='6'>Team 1</Menu.Item>
-          <Menu.Item key='8'>Team 2</Menu.Item>
-        </SubMenu>
-        <Menu.Item key='9'>Common</Menu.Item>
       </Menu>
     </Sider>
   );

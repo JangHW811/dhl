@@ -118,11 +118,11 @@ const CustomerDetailPage: FC<RouteComponentProps<{ accntNo: string }>> = (props)
   const { accntNo } = props.match.params;
   console.log(props, props.match, props.match.params);
   return (
-    <CommonContainer>
+    <CommonContainer style={{ width: 1200 }}>
       <CustomerTemplate accntNo={accntNo} />
-      <HorizontalBlank height={40} />
+      <HorizontalBlank height={25} />
       <BusinessTemplate accntNo={accntNo} />
-      <HorizontalBlank height={40} />
+      <HorizontalBlank height={25} />
       <EtcTemplate accntNo={accntNo} />
     </CommonContainer>
   );

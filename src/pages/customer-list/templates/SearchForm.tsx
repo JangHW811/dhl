@@ -11,20 +11,20 @@ export interface SearchDataInterface {
   searchValue: string;
 }
 const SearchForm: FC<SearchFormInterface> = ({ onSearch, param }) => {
-  const [searchType, setSearchType] = useState(param?.searchField ?? '');
-  const [searchKeyword, setSearchKeyword] = useState(param?.searchValue ?? '');
+  const [searchField, setSearchField] = useState(param?.searchField ?? '');
+  const [searchValue, setSearchValue] = useState(param?.searchValue ?? '');
   const [searchData, setSearchData] = useState<SearchDataInterface>({ searchField: '', searchValue: '' });
   const changeSearchType = (key: string) => {
-    setSearchType(key);
-    setSearchKeyword('');
+    setSearchField(key);
+    setSearchValue('');
   };
 
   useEffect(() => {
     setSearchData({
-      searchField: searchType,
-      searchValue: searchKeyword,
+      searchField,
+      searchValue,
     });
-  }, [searchType, searchKeyword]);
+  }, [searchField, searchValue]);
   return (
     <Row gutter={10} style={{ alignItems: 'flex-end' }}>
       <Col span={4}>
@@ -33,7 +33,7 @@ const SearchForm: FC<SearchFormInterface> = ({ onSearch, param }) => {
           onChange={(value: any) => {
             changeSearchType(value);
           }}
-          value={param?.searchField}
+          value={searchField}
           options={[
             { label: '고객번호', value: 'accntNo' },
             { label: '한글상호', value: 'bizKorNm' },
@@ -48,7 +48,7 @@ const SearchForm: FC<SearchFormInterface> = ({ onSearch, param }) => {
       </Col>
       <Col span={4}>
         <Title>검색어</Title>
-        <Input value={searchKeyword} onChange={({ target }) => setSearchKeyword(target.value)} />
+        <Input value={searchValue} onChange={({ target }) => setSearchValue(target.value)} />
       </Col>
       <Col>
         <Button

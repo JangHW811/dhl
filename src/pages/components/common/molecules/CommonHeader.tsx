@@ -1,8 +1,9 @@
-import DHL_LOGO from '@assets/logo.gif';
-import { useGlobalModal } from '@store/modal';
+import DHL_LOGO from '@assets/images/logo.gif';
 import { useAuth } from '@utils/auth';
-import { Button, Col, Row } from 'antd';
+import { getStorageItem, STORAGE_KEY } from '@utils/storage';
+import { Button, Col, Row, Space } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
+import useModal from 'antd/lib/modal/useModal';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
@@ -11,41 +12,52 @@ interface HeaderInterface {
 }
 const CommonHeader: FC<HeaderInterface> = ({ title }) => {
   const { authAction, isLoggedIn } = useAuth();
-  const { globalModalActions } = useGlobalModal();
+  const [modal, contextHolder] = useModal();
 
+  const userInfo: UserInfo = getStorageItem(STORAGE_KEY.USER_INFO);
   const showLoginModal = () => {
-    globalModalActions.open({
-      type: 'confirm',
-      contents: '로그아웃을 하시겠습니까?',
-      onClickConfirm: () => authAction.logout(),
+    modal.confirm({
+      content: '로그아웃을 하시겠습니까?',
+      onOk: () => authAction.logout(),
     });
   };
   return (
     <HeaderContainer>
       <HeaderRow>
-        <Col span={22}>
-          <DhlLogo src={DHL_LOGO} />
+        <Col span={14}>
           <Contents>{title}</Contents>
         </Col>
-        {isLoggedIn && (
-          <Col>
-            <Button type={'primary'} onClick={showLoginModal}>
-              로그아웃
-            </Button>
-          </Col>
-        )}
+        <Col span={10}>
+          <RightContainer>
+            <Space size={20}>
+              {isLoggedIn && (
+                <>
+                  <NameFont>{`${userInfo.username}(DHL KR)`}</NameFont>
+                  <_Button type={'primary'} onClick={showLoginModal}>
+                    Logout
+                  </_Button>
+                </>
+              )}
+              <DhlLogo src={DHL_LOGO} />
+            </Space>
+          </RightContainer>
+        </Col>
       </HeaderRow>
+      {contextHolder}
     </HeaderContainer>
   );
 };
 
 const HeaderContainer = styled(Header)`
   width: 100vw;
-  height: 150px;
+  height: 64px;
   background-color: #ffcc00;
   justify-content: center;
+  align-items: center;
   border-bottom: 6px solid #d40511;
   display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 const HeaderRow = styled(Row)`
@@ -56,17 +68,35 @@ const Contents = styled.div`
   align-items: center;
   flex: 1;
   display: flex;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
-  color: white;
+  color: black;
   height: 100%;
 `;
+const NameFont = styled.span`
+  align-items: center;
+  flex: 1;
+  display: flex;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+`;
 
+const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
 const DhlLogo = styled.img`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 127px;
-  height: 17px;
+  height: 45%;
+  object-fit: contain;
+`;
+
+const _Button = styled(Button)`
+  padding: 8px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export default CommonHeader;

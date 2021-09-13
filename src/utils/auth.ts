@@ -28,8 +28,9 @@ export const useAuth = () => {
           userId,
           password,
         });
-        const { apiToken } = res.data;
+        const { apiToken, principal } = res.data;
         setAccessToken(apiToken);
+        setStorageItem(STORAGE_KEY.USER_INFO, principal);
         isLoading(false);
       } finally {
         isLoading(false);
